@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>히라가나 퀴즈</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        .hiragana {
+            font-size: 120px;
+            margin: 20px 0;
+            line-height: 1.2;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        input {
+            padding: 10px 15px;
+            font-size: 18px;
+            width: 200px;
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .home-button {
+            background-color: #2196F3;
+            margin-right: 10px;
+        }
+        .home-button:hover {
+            background-color: #0b7dda;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            min-height: 25px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .checkbox-container input {
+            width: auto;
+            margin: 0 10px 0 0;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+        .select-all {
+            background-color: #ff9800;
+            margin-bottom: 15px;
+        }
+        .select-all:hover {
+            background-color: #e68a00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="start-screen">
+        <h1>히라가나 퀴즈</h1>
+        <h2>학습할 히라가나 행을 선택하세요</h2>
+        
+        <button id="select-all-button" class="select-all">모든 행 선택/해제</button>
+        
+        <div class="checkbox-group">
+            <div class="checkbox-container">
+                <input type="checkbox" id="a-row" checked>
+                <label for="a-row">아이에우오 (あいうえお)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ka-row" checked>
+                <label for="ka-row">카키쿠케코 (かきくけこ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="sa-row" checked>
+                <label for="sa-row">사시스세소 (さしすせそ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ta-row">
+                <label for="ta-row">타치츠테토 (たちつてと)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="na-row">
+                <label for="na-row">나니누네노 (なにぬねの)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ha-row">
+                <label for="ha-row">하히후헤호 (はひふへほ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ma-row">
+                <label for="ma-row">마미무메모 (まみむめも)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ya-row">
+                <label for="ya-row">야유요 (やゆよ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ra-row">
+                <label for="ra-row">라리루레로 (らりるれろ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="wa-row">
+                <label for="wa-row">와오 (わを)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="n-row">
+                <label for="n-row">응 (ん)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ga-row">
+                <label for="ga-row">가기구게고 (がぎぐげご)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="za-row">
+                <label for="za-row">자지즈제조 (ざじずぜぞ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="da-row">
+                <label for="da-row">다지즈데도 (だぢづでど)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="ba-row">
+                <label for="ba-row">바비부베보 (ばびぶべぼ)</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="pa-row">
+                <label for="pa-row">파피푸페포 (ぱぴぷぺぽ)</label>
+            </div>
+        </div>
+        
+        <button id="start-button">퀴즈 시작하기</button>
+    </div>
+
+    <div class="container hidden" id="quiz-screen">
+        <h1>히라가나 퀴즈</h1>
+        <div class="hiragana" id="current-hiragana"></div>
+        <div>
+            <input type="text" id="answer-input" placeholder="로마자로 입력하세요" autocomplete="off">
+        </div>
+        <div class="button-container">
+            <button class="home-button" id="home-button">초기화면으로</button>
+            <button id="check-button">확인</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <div class="score" id="score">맞은 개수: 0</div>
+    </div>
+
+    <script>
+        // 히라가나와 로마자 매핑
+        const hiraganaRows = {
+            'a': [
+                {char: 'あ', roma: 'a'},
+                {char: 'い', roma: 'i'},
+                {char: 'う', roma: 'u'},
+                {char: 'え', roma: 'e'},
+                {char: 'お', roma: 'o'}
+            ],
+            'ka': [
+                {char: 'か', roma: 'ka'},
+                {char: 'き', roma: 'ki'},
+                {char: 'く', roma: 'ku'},
+                {char: 'け', roma: 'ke'},
+                {char: 'こ', roma: 'ko'}
+            ],
+            'sa': [
+                {char: 'さ', roma: 'sa'},
+                {char: 'し', roma: 'shi'},
+                {char: 'す', roma: 'su'},
+                {char: 'せ', roma: 'se'},
+                {char: 'そ', roma: 'so'}
+            ],
+            'ta': [
+                {char: 'た', roma: 'ta'},
+                {char: 'ち', roma: 'chi'},
+                {char: 'つ', roma: 'tsu'},
+                {char: 'て', roma: 'te'},
+                {char: 'と', roma: 'to'}
+            ],
+            'na': [
+                {char: 'な', roma: 'na'},
+                {char: 'に', roma: 'ni'},
+                {char: 'ぬ', roma: 'nu'},
+                {char: 'ね', roma: 'ne'},
+                {char: 'の', roma: 'no'}
+            ],
+            'ha': [
+                {char: 'は', roma: 'ha'},
+                {char: 'ひ', roma: 'hi'},
+                {char: 'ふ', roma: 'fu'},
+                {char: 'へ', roma: 'he'},
+                {char: 'ほ', roma: 'ho'}
+            ],
+            'ma': [
+                {char: 'ま', roma: 'ma'},
+                {char: 'み', roma: 'mi'},
+                {char: 'む', roma: 'mu'},
+                {char: 'め', roma: 'me'},
+                {char: 'も', roma: 'mo'}
+            ],
+            'ya': [
+                {char: 'や', roma: 'ya'},
+                {char: 'ゆ', roma: 'yu'},
+                {char: 'よ', roma: 'yo'}
+            ],
+            'ra': [
+                {char: 'ら', roma: 'ra'},
+                {char: 'り', roma: 'ri'},
+                {char: 'る', roma: 'ru'},
+                {char: 'れ', roma: 're'},
+                {char: 'ろ', roma: 'ro'}
+            ],
+            'wa': [
+                {char: 'わ', roma: 'wa'},
+                {char: 'を', roma: 'wo'}
+            ],
+            'n': [
+                {char: 'ん', roma: 'n'}
+            ],
+            'ga': [
+                {char: 'が', roma: 'ga'},
+                {char: 'ぎ', roma: 'gi'},
+                {char: 'ぐ', roma: 'gu'},
+                {char: 'げ', roma: 'ge'},
+                {char: 'ご', roma: 'go'}
+            ],
+            'za': [
+                {char: 'ざ', roma: 'za'},
+                {char: 'じ', roma: 'ji'},
+                {char: 'ず', roma: 'zu'},
+                {char: 'ぜ', roma: 'ze'},
+                {char: 'ぞ', roma: 'zo'}
+            ],
+            'da': [
+                {char: 'だ', roma: 'da'},
+                {char: 'ぢ', roma: 'ji'},
+                {char: 'づ', roma: 'zu'},
+                {char: 'で', roma: 'de'},
+                {char: 'ど', roma: 'do'}
+            ],
+            'ba': [
+                {char: 'ば', roma: 'ba'},
+                {char: 'び', roma: 'bi'},
+                {char: 'ぶ', roma: 'bu'},
+                {char: 'べ', roma: 'be'},
+                {char: 'ぼ', roma: 'bo'}
+            ],
+            'pa': [
+                {char: 'ぱ', roma: 'pa'},
+                {char: 'ぴ', roma: 'pi'},
+                {char: 'ぷ', roma: 'pu'},
+                {char: 'ぺ', roma: 'pe'},
+                {char: 'ぽ', roma: 'po'}
+            ]
+        };
+        
+        let availableHiragana = [];
+        let currentHiragana = '';
+        let correctCount = 0;
+        
+        // 모든 체크박스 항목
+        const allRows = [
+            'a-row', 'ka-row', 'sa-row', 'ta-row', 'na-row', 
+            'ha-row', 'ma-row', 'ya-row', 'ra-row', 'wa-row', 
+            'n-row', 'ga-row', 'za-row', 'da-row', 'ba-row', 'pa-row'
+        ];
+        
+        // 화면 전환 함수
+        function showScreen(screenId) {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+        
+        // 모든 행 선택 또는 해제
+        function toggleAllRows() {
+            const checkboxes = document.querySelectorAll('.checkbox-container input');
+            const anyUnchecked = Array.from(checkboxes).some(cb => !cb.checked);
+            
+            allRows.forEach(rowId => {
+                document.getElementById(rowId).checked = anyUnchecked;
+            });
+        }
+        
+        // 사용자가 선택한 행에 따라 히라가나 배열 업데이트
+        function updateAvailableHiragana() {
+            availableHiragana = [];
+            
+            Object.keys(hiraganaRows).forEach((row, index) => {
+                if (document.getElementById(`${row}-row`).checked) {
+                    availableHiragana = availableHiragana.concat(hiraganaRows[row]);
+                }
+            });
+            
+            // 적어도 하나의 행이 선택되어 있는지 확인
+            if (availableHiragana.length === 0) {
+                alert('최소한 하나의 히라가나 행을 선택해주세요.');
+                return false;
+            }
+            return true;
+        }
+        
+        // 랜덤 히라가나 선택
+        function getRandomHiragana() {
+            const randomIndex = Math.floor(Math.random() * availableHiragana.length);
+            return availableHiragana[randomIndex];
+        }
+        
+        // 퀴즈 초기화
+        function initQuiz() {
+            const hiraganaObj = getRandomHiragana();
+            currentHiragana = hiraganaObj.char;
+            document.getElementById('current-hiragana').textContent = currentHiragana;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('answer-input').focus();
+        }
+        
+        // 퀴즈 시작
+        function startQuiz() {
+            if (!updateAvailableHiragana()) {
+                return;
+            }
+            
+            correctCount = 0;
+            document.getElementById('score').textContent = `맞은 개수: 0`;
+            showScreen('quiz-screen');
+            initQuiz();
+        }
+        
+        // 초기화면으로 돌아가기
+        function goHome() {
+            showScreen('start-screen');
+        }
+        
+        // 답변 확인
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer-input').value.toLowerCase().trim();
+            const correctAnswer = availableHiragana.find(h => h.char === currentHiragana).roma;
+            
+            if (userAnswer === correctAnswer) {
+                document.getElementById('feedback').textContent = '정답입니다!';
+                document.getElementById('feedback').className = 'feedback correct';
+                correctCount++;
+                document.getElementById('score').textContent = `맞은 개수: ${correctCount}`;
+                
+                // 잠시 후 다음 문제
+                setTimeout(() => {
+                    initQuiz();
+                }, 1000);
+            } else {
+                document.getElementById('feedback').textContent = `오답입니다. 정답은 '${correctAnswer}'입니다.`;
+                document.getElementById('feedback').className = 'feedback incorrect';
+            }
+        }
+        
+        // 이벤트 리스너
+        document.getElementById('select-all-button').addEventListener('click', toggleAllRows);
+        document.getElementById('start-button').addEventListener('click', startQuiz);
+        document.getElementById('home-button').addEventListener('click', goHome);
+        document.getElementById('check-button').addEventListener('click', checkAnswer);
+        document.getElementById('answer-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        // 페이지 로드시 초기화면 표시
+        window.onload = function() {
+            showScreen('start-screen');
+        };
+    </script>
+</body>
+</html>
